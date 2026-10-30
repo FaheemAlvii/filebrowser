@@ -1,12 +1,14 @@
 html[dir="rtl"] #listing {
-  margin-right: 16em;
+  margin-right: 0;
 }
 
 #listing h2 {
-  margin: 0 0 0 0.5em;
-  font-size: 0.9em;
+  margin: 1em 0 0.5em 0.5em;
+  font-size: 0.85em;
   color: var(--textPrimary);
-  font-weight: 500;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 #listing .item div:last-of-type * {
@@ -22,14 +24,13 @@ html[dir="rtl"] #listing {
 
 #listing .item {
   background: var(--surfacePrimary);
-  border-color: var(--divider);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-md);
   position: relative;
   display: flex;
   flex-wrap: nowrap;
-  color: var(--textPrimary);
-  transition:
-    0.1s ease background,
-    0.1s ease opacity;
+  color: var(--textSecondary);
+  transition: all 0.15s ease;
   align-items: center;
   cursor: pointer;
   user-select: none;
@@ -47,31 +48,35 @@ html[dir="rtl"] #listing {
 
 #listing .item .size,
 #listing .item .modified {
-  font-size: 0.9em;
+  font-size: 0.8rem;
+  color: var(--textPrimary);
 }
 
 #listing .item .name {
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.9rem;
 }
 
 #listing .item i {
-  font-size: 4em;
-  margin-right: 0.1em;
+  font-size: 3.5em;
+  margin-right: 0.25em;
   vertical-align: bottom;
+  color: var(--blue);
 }
 
 #listing .item img {
-  width: 4em;
-  height: 4em;
+  width: 3.5em;
+  height: 3.5em;
   object-fit: cover;
-  margin-right: 0.1em;
+  margin-right: 0.25em;
   vertical-align: bottom;
+  border-radius: var(--radius-sm);
 }
 
 .message {
   text-align: center;
-  font-size: 2em;
-  margin: 1em auto;
+  font-size: 1.5em;
+  margin: 3em auto;
   display: block !important;
   width: 95%;
   color: var(--textPrimary);
@@ -79,30 +84,43 @@ html[dir="rtl"] #listing {
 }
 
 .message i {
-  font-size: 2.5em;
-  margin-bottom: 0.2em;
+  font-size: 3em;
+  margin-bottom: 0.4em;
   display: block;
+  color: var(--iconTertiary);
 }
 
+/* Mosaic (grid) view matching modern card design */
 #listing.mosaic {
   padding-top: 1em;
-  margin: 0 -0.5em;
+  gap: 1rem;
 }
 
 #listing.mosaic .item {
-  width: calc(33% - 1em);
-  margin: 0.5em;
-  padding: 0.5em;
-  border-radius: 0.2em;
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.06),
-    0 1px 2px rgba(0, 0, 0, 0.12);
+  width: calc(33.333% - 0.75rem);
+  padding: 0.85em 1em;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--borderPrimary);
+  margin: 0;
+}
+
+@media (max-width: 1200px) {
+  #listing.mosaic .item {
+    width: calc(50% - 0.5rem);
+  }
+}
+
+@media (max-width: 600px) {
+  #listing.mosaic .item {
+    width: 100%;
+  }
 }
 
 #listing.mosaic .item:hover {
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.24) !important;
+  box-shadow: var(--card-shadow-hover) !important;
+  border-color: rgba(14, 165, 233, 0.4);
+  transform: translateY(-2px);
 }
 
 #listing.mosaic .header {
@@ -110,11 +128,12 @@ html[dir="rtl"] #listing {
 }
 
 #listing.mosaic .item div:first-of-type {
-  width: 5em;
+  width: 4.5em;
+  flex-shrink: 0;
 }
 
 #listing.mosaic .item div:last-of-type {
-  width: calc(100% - 5vw);
+  width: calc(100% - 4.5em);
 }
 
 #listing.mosaic.gallery .item div:first-of-type {
@@ -132,19 +151,21 @@ html[dir="rtl"] #listing {
 
 #listing.mosaic.gallery .item[data-type="image"] div:last-of-type {
   color: white;
-  background: linear-gradient(#0000, #0009);
+  background: linear-gradient(#0000, rgba(0, 0, 0, 0.8));
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 #listing.mosaic.gallery .item i {
   width: 100%;
   margin-right: 0;
-  font-size: 8em;
+  font-size: 7em;
   text-align: center;
 }
 
 #listing.mosaic.gallery .item img {
   width: 100%;
   height: 100%;
+  border-radius: var(--radius-md);
 }
 
 #listing.gallery .size,
@@ -152,36 +173,56 @@ html[dir="rtl"] #listing {
   display: none;
 }
 
+/* List view matching clean modern data table */
 #listing.list {
   flex-direction: column;
   width: 100%;
   max-width: 100%;
-  margin: 0;
+  margin: 1em 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--borderPrimary);
+  box-shadow: var(--card-shadow);
 }
 
 #listing.list .item {
   width: 100%;
   margin: 0;
-  border: 1px solid var(--borderPrimary);
-  padding: 1em;
-  border-top: 0;
+  border: 0;
+  border-bottom: 1px solid var(--divider);
+  border-radius: 0;
+  padding: 0.75em 1.25em;
+  background: var(--surfacePrimary);
+  transition: background 0.15s ease;
+}
+
+#listing.list .item:last-child {
+  border-bottom: 0;
+}
+
+#listing.list .item:hover {
+  background: var(--hover);
 }
 
 #listing.list h2 {
   display: none;
 }
 
+/* Selection state */
 #listing .item[aria-selected="true"] {
-  background: var(--blue) !important;
-  color: var(--iconSecondary) !important;
+  background: rgba(14, 165, 233, 0.1) !important;
+  border-color: var(--blue) !important;
+  color: var(--blue) !important;
+  box-shadow: 0 0 0 1px var(--blue) !important;
 }
 
 #listing.list .item div:first-of-type {
   width: 3em;
+  flex-shrink: 0;
 }
 
 #listing.list .item div:first-of-type i {
-  font-size: 2em;
+  font-size: 1.8em;
 }
 
 #listing.list .item div:first-of-type img {
@@ -197,6 +238,10 @@ html[dir="rtl"] #listing {
 
 #listing.list .item .name {
   width: 50%;
+  font-weight: 500;
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 
 #listing.list .item .size {
@@ -205,22 +250,18 @@ html[dir="rtl"] #listing {
 
 #listing .item.header {
   display: none !important;
-  background-color: var(--iconTertiary);
-}
-
-#listing.list .header i {
-  font-size: 1.5em;
-  vertical-align: middle;
-  margin-left: 0.2em;
 }
 
 #listing.list .item.header {
   display: flex !important;
-  background: var(--background);
-  z-index: 999;
-  padding: 0.85em;
-  border: 0;
-  border-bottom: 1px solid var(--borderPrimary);
+  background: var(--surfaceSecondary);
+  border-bottom: 1px solid var(--divider);
+  padding: 0.75em 1.25em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--textPrimary);
 }
 
 #listing.list .item.header > div {
@@ -235,20 +276,16 @@ html[dir="rtl"] #listing {
   color: inherit;
 }
 
-#listing.list .name {
-  font-weight: normal;
-  word-wrap: break-word;
-  word-break: break-all;
-  white-space: pre-wrap;
-}
-
 #listing.list .header span {
   vertical-align: middle;
 }
 
 #listing.list .header i {
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin-left: 0.2em;
   opacity: 0;
-  transition: 0.1s ease all;
+  transition: opacity 0.15s ease;
 }
 
 #listing.list .header p:hover i,
@@ -257,20 +294,35 @@ html[dir="rtl"] #listing {
 }
 
 #listing.list .item.header .active {
-  font-weight: bold;
+  font-weight: 700;
+  color: var(--blue);
 }
 
+/* Multiple selection bottom bar */
 #listing #multiple-selection {
   position: fixed;
-  bottom: -4em;
-  left: 0;
-  z-index: 99999;
-  width: 100%;
-  background-color: var(--blue);
+  bottom: -5em;
+  left: 16rem;
+  z-index: 9999;
+  width: calc(100% - 16rem);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--borderPrimary);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
   height: 4em;
-  padding: 0.5em 0.5em 0.5em 1em;
+  padding: 0.5em 1.5em;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  transition: 0.2s ease bottom;
+  transition: bottom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  #listing #multiple-selection {
+    left: 0;
+    width: 100%;
+  }
 }
 
 #listing #multiple-selection.active {
@@ -279,5 +331,5 @@ html[dir="rtl"] #listing {
 
 #listing #multiple-selection p,
 #listing #multiple-selection i {
-  color: var(--iconSecondary);
+  color: var(--textSecondary);
 }

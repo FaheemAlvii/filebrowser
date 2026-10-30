@@ -1,20 +1,20 @@
 .dashboard {
-  margin: 1em 0;
+  margin: 1.5em 0;
 }
 
 .dashboard .row {
   display: flex;
-  margin: 0 -0.5em;
+  margin: 0 -0.75em;
   flex-wrap: wrap;
 }
 
 html[dir="rtl"] .dashboard .row {
-  margin-right: 16em;
+  margin-right: 0;
 }
 
 .dashboard .row .column {
   display: flex;
-  padding: 0 0.5em;
+  padding: 0 0.75em;
   width: 50%;
 }
 
@@ -33,93 +33,99 @@ a {
 }
 
 .dashboard p label {
-  margin-bottom: 0.2em;
+  margin-bottom: 0.35em;
   display: block;
-  font-size: 0.8em;
+  font-size: 0.825em;
   font-weight: 500;
-  color: var(--textPrimary);
+  color: var(--textSecondary);
 }
 
 li code,
 p code {
-  background: var(--divider);
-  padding: 0.1em;
-  border-radius: 0.2em;
+  background: var(--surfaceSecondary);
+  border: 1px solid var(--borderPrimary);
+  padding: 0.15em 0.35em;
+  border-radius: var(--radius-sm);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85em;
 }
 
 .small {
-  font-size: 0.8em;
+  font-size: 0.825em;
   line-height: 1.5;
 }
 
+/* Settings navigation tabs matching odoo-server-reborn tabs */
 .dashboard #nav {
   display: flex;
-  padding-bottom: 1em;
+  padding-bottom: 1.25em;
   overflow: auto;
 }
 
 .dashboard #nav .wrapper {
   display: flex;
   flex-grow: 1;
-  border-bottom: 2px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
 }
 
 html[dir="rtl"] .dashboard #nav .wrapper {
-  margin-right: 16em;
+  margin-right: 0;
 }
 
 .dashboard #nav ul {
   list-style: none;
   display: flex;
-  color: var(--action);
+  color: var(--textPrimary);
   font-weight: 500;
   padding: 0;
-  margin: 0 0 -2px 0;
-  font-size: 0.8em;
+  margin: 0 0 -1px 0;
+  font-size: 0.875rem;
   text-align: center;
   justify-content: left;
+  gap: 0.5rem;
 }
 
 .dashboard #nav ul li {
   position: relative;
-  padding: 1.5em 2em;
+  padding: 0.75em 1.25em;
   white-space: nowrap;
   border-bottom: 2px solid transparent;
-  transition: 0.1s ease-in-out all;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
 }
 
 .dashboard #nav ul li:hover {
-  background: var(--surfaceSecondary);
+  background: var(--hover);
+  color: var(--textSecondary);
 }
 
 .dashboard #nav ul li.active {
   border-color: var(--blue);
   color: var(--blue);
-}
-
-.dashboard #nav ul li.active::before {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  content: "";
-  background: var(--blue);
-  opacity: 0.08;
+  font-weight: 600;
+  background: rgba(14, 165, 233, 0.08);
 }
 
 .dashboard #nav i {
-  font-size: 1em;
+  font-size: 1.1em;
   vertical-align: middle;
+  margin-right: 0.35em;
 }
 
+/* Clean modern tables matching odoo-server-reborn */
 table {
   border-collapse: collapse;
   width: 100%;
 }
 
 table tr {
-  border-bottom: 1px solid var(--iconTertiary);
+  border-bottom: 1px solid var(--divider);
+  transition: background 0.12s ease;
+}
+
+table tr:hover {
+  background: var(--hover);
 }
 
 table tr:last-child {
@@ -127,14 +133,19 @@ table tr:last-child {
 }
 
 table th {
-  font-weight: 500;
-  color: var(--textSecondary);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--textPrimary);
   text-align: left;
+  background: var(--surfaceSecondary);
 }
 
 table th,
 table td {
-  padding: 0.5em 0;
+  padding: 0.75em 1em;
+  font-size: 0.875rem;
 }
 
 table td.small {
@@ -142,31 +153,31 @@ table td.small {
 }
 
 table tr > *:first-child {
-  padding-left: 1em;
+  padding-left: 1.25em;
 }
 
 html[dir="rtl"] table tr > * {
   padding-left: unset;
-  padding-right: 1em;
+  padding-right: 1.25em;
   text-align: right;
   direction: ltr;
 }
 
 table tr > *:last-child {
-  padding-right: 1em;
+  padding-right: 1.25em;
 }
 
+/* Modern Card system */
 .card {
   position: relative;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.25rem 0;
   background: var(--surfacePrimary);
   color: var(--textSecondary);
-  border-radius: 2px;
-  box-shadow:
-    0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  overflow: auto;
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: all 0.15s ease;
 }
 
 .card.floating {
@@ -174,11 +185,26 @@ table tr > *:last-child {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  max-width: 25em;
+  max-width: 28em;
   width: 90%;
-  max-height: 95%;
-  /* animation-duration: 0.3s;
-  animation-fill-mode: forwards; */
+  max-height: 90vh;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow-hover);
+  border: 1px solid var(--borderPrimary);
+  z-index: 10001;
+  background: var(--surfacePrimary);
+  animation: 0.2s cubic-bezier(0.16, 1, 0.3, 1) modalPop;
+}
+
+@keyframes modalPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .card > * > *:first-child {
@@ -190,8 +216,10 @@ table tr > *:last-child {
 }
 
 .card .card-title {
-  padding: 1.5em 1em 1em;
+  padding: 1.25em 1.5em 0.75em;
   display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--divider);
 }
 
 .card .card-title > *:first-child {
@@ -204,15 +232,15 @@ html[dir="rtl"] .card .card-title > *:first-child {
 }
 
 .card > div {
-  padding: 1em 1em;
+  padding: 1.25em 1.5em;
 }
 
 .card > div:first-child {
-  padding-top: 1.5em;
+  padding-top: 1.25em;
 }
 
 .card > div:last-child {
-  padding-bottom: 1.5em;
+  padding-bottom: 1.25em;
 }
 
 .card .card-title * {
@@ -221,6 +249,9 @@ html[dir="rtl"] .card .card-title > *:first-child {
 
 .card .card-action {
   text-align: right;
+  border-top: 1px solid var(--divider);
+  background: var(--surfaceSecondary);
+  padding: 0.85em 1.5em;
 }
 
 body.rtl .card .card-action {
@@ -233,19 +264,21 @@ body.rtl .card .card-action {
 }
 
 .card h2 {
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--textSecondary);
 }
 
 .card h3 {
-  color: var(--textPrimary);
-  font-size: 1em;
-  font-weight: 500;
-  margin: 2em 0 1em;
+  color: var(--textSecondary);
+  font-size: 0.95em;
+  font-weight: 600;
+  margin: 1.5em 0 0.75em;
 }
 
 .card-content table {
-  margin: 0 -1em;
-  width: calc(100% + 2em);
+  margin: 0 -1.5em;
+  width: calc(100% + 3em);
 }
 
 .card code {
@@ -253,15 +286,16 @@ body.rtl .card .card-action {
 }
 
 .card#download {
-  max-width: 15em;
+  max-width: 18em;
 }
 
 .card#share input,
-.card#share select,
-.card#share input::-webkit-inner-spin-button,
-.card#share input::-webkit-outer-spin-button {
-  background: var(--surfacePrimary);
+.card#share select {
+  background: var(--surfaceSecondary);
   color: var(--textSecondary);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-sm);
+  padding: 0.4em 0.6em;
 }
 
 .card#share ul {
@@ -274,23 +308,24 @@ body.rtl .card .card-action {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--divider);
 }
 
 .card#share ul li a {
   color: var(--blue);
   cursor: pointer;
   margin-right: auto;
+  font-weight: 500;
 }
 
 .card#share ul li .action i {
-  font-size: 1em;
+  font-size: 1.1em;
 }
 
 .card#share ul li input,
 .card#share ul li select {
-  padding: 0.2em;
   margin-right: 0.5em;
-  border: 1px solid var(--borderPrimary);
 }
 
 .card#share .action.copy-clipboard::after {
@@ -298,14 +333,14 @@ body.rtl .card .card-action {
   position: absolute;
   left: -25%;
   width: 150%;
-  font-size: 0.6em;
+  font-size: 0.65em;
   text-align: center;
-  background: #44a6f5;
+  background: var(--blue);
   color: #fff;
-  padding: 0.5em 0.2em;
-  border-radius: 0.4em;
+  padding: 0.4em 0.2em;
+  border-radius: var(--radius-sm);
   top: -2em;
-  transition: 0.1s ease opacity;
+  transition: 0.15s ease opacity;
   opacity: 0;
 }
 
@@ -326,7 +361,9 @@ body.rtl .card .card-action {
 }
 
 .overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   position: fixed;
   top: 0;
   left: 0;
@@ -335,62 +372,73 @@ body.rtl .card .card-action {
   z-index: 9999;
   visibility: hidden;
   opacity: 0;
-  animation: 0.1s show forwards;
+  animation: 0.15s show forwards;
 }
 
-/* * * * * * * * * * * * * * * *
- *        PROMPT - MOVE        *
- * * * * * * * * * * * * * * * */
-
+/* File move dialog */
 .file-list {
   max-height: 50vh;
   overflow: auto;
   list-style: none;
-  margin: 0;
+  margin: 0.5em 0;
   padding: 0;
   width: 100%;
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-md);
 }
 
 .file-list li {
   width: 100%;
   user-select: none;
-  border-radius: 0.2em;
-  padding: 0.3em;
+  border-radius: 0;
+  padding: 0.55em 0.75em;
+  border-bottom: 1px solid var(--divider);
+  transition: all 0.12s ease;
+  font-size: 0.875rem;
+}
+
+.file-list li:last-child {
+  border-bottom: 0;
 }
 
 .file-list li[aria-selected="true"] {
-  background: var(--blue) !important;
-  color: var(--iconSecondary) !important;
-  transition: 0.1s ease all;
+  background: rgba(14, 165, 233, 0.1) !important;
+  color: var(--blue) !important;
+  font-weight: 600;
 }
 
 .file-list li:hover {
-  background: var(--surfaceSecondary);
+  background: var(--hover);
   cursor: pointer;
 }
 
 .file-list li:before {
   content: "folder";
-  color: var(--textPrimary);
+  color: var(--blue);
   vertical-align: middle;
   line-height: 1.4;
   font-family: "Material Icons";
-  font-size: 1.75em;
-  margin-right: 0.25em;
+  font-size: 1.4em;
+  margin-right: 0.4em;
 }
 
 .file-list li[aria-selected="true"]:before {
-  color: var(--iconSecondary);
+  color: var(--blue);
 }
 
 .help {
-  max-width: 24em;
+  max-width: 26em;
 }
 
 .help ul {
   padding: 0;
   margin: 1em 0;
   list-style: none;
+}
+
+.help li {
+  padding: 0.35em 0;
+  font-size: 0.875rem;
 }
 
 @keyframes show {
@@ -408,12 +456,13 @@ body.rtl .card .card-action {
   }
 }
 
+/* Accordion Collapsible matching odoo-server-reborn Accordion */
 .collapsible {
-  border-top: 1px solid var(--borderPrimary);
+  border-top: 1px solid var(--divider);
 }
 
 .collapsible:last-of-type {
-  border-bottom: 1px solid var(--borderPrimary);
+  border-bottom: 1px solid var(--divider);
 }
 
 .collapsible > input {
@@ -427,16 +476,19 @@ body.rtl .card .card-action {
   border-left: 0;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
 }
 
 .collapsible > label * {
   margin: 0;
-  color: var(--textPrimary);
+  color: var(--textSecondary);
 }
 
 .collapsible > label i {
   transition: 0.2s ease transform;
   user-select: none;
+  color: var(--textPrimary);
 }
 
 .collapsible .collapse {
@@ -446,26 +498,27 @@ body.rtl .card .card-action {
 }
 
 .collapsible > input:checked ~ .collapse {
-  padding-top: 1em;
-  padding-bottom: 1em;
-  max-height: 20em;
+  padding-top: 0.5em;
+  padding-bottom: 1.25em;
+  max-height: 25em;
 }
 
 .collapsible > input:checked ~ label i {
   transform: rotate(180deg);
+  color: var(--blue);
 }
 
 .card .collapsible {
-  width: calc(100% + 2em);
-  margin: 0 -1em;
+  width: calc(100% + 3em);
+  margin: 0 -1.5em;
 }
 
 .card .collapsible > label {
-  padding: 1em;
+  padding: 1em 1.5em;
 }
 
 .card .collapsible .collapse {
-  padding: 0 1em;
+  padding: 0 1.5em;
 }
 
 .card .card-action.full {
@@ -477,28 +530,36 @@ body.rtl .card .card-action {
 .card .card-action.full .action {
   flex: 1;
   padding: 2em;
-  border-radius: 0.2em;
+  border-radius: var(--radius-md);
   border: 1px solid var(--borderPrimary);
   text-align: center;
+  transition: all 0.15s ease;
+}
+
+.card .card-action.full .action:hover {
+  border-color: var(--blue);
+  background: var(--hover);
+  transform: translateY(-2px);
 }
 
 .card .card-action.full .action {
-  margin: 0 0.25em 0.5em;
+  margin: 0 0.35em 0.7em;
 }
 
 .card .card-action.full .action i {
   display: block;
   padding: 0;
-  margin-bottom: 0.25em;
-  font-size: 4em;
+  margin-bottom: 0.35em;
+  font-size: 3.5em;
+  color: var(--blue);
 }
 
 .card .card-action.full .action .title {
-  font-size: 1.5em;
-  font-weight: 500;
+  font-size: 1.25em;
+  font-weight: 600;
+  color: var(--textSecondary);
 }
 
-/*** RTL - Fix disk usage information (in english) ***/
 html[dir="rtl"] .credits {
   text-align: right;
   direction: ltr;

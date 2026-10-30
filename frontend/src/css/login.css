@@ -1,57 +1,244 @@
 #login {
-  background: var(--surfacePrimary);
+  background: var(--background);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-#login img {
-  width: 4em;
-  height: 4em;
-  margin: 0 auto;
+/* Background ambient glow decorations matching odoo-server-reborn */
+.login-bg-decorations {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.login-bg-decorations .glow-orb {
+  position: absolute;
+  width: 24rem;
+  height: 24rem;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.login-bg-decorations .glow-top {
+  top: -8rem;
+  right: -8rem;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.25) 0%, rgba(14, 165, 233, 0.05) 70%, transparent 100%);
+}
+
+.login-bg-decorations .glow-bottom {
+  bottom: -8rem;
+  left: -8rem;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.18) 0%, rgba(14, 165, 233, 0.03) 70%, transparent 100%);
+}
+
+/* Glassmorphism login card matching odoo-server-reborn */
+.login-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 26rem;
+  padding: 2.25rem 2rem;
+  margin: 1rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--card-shadow-hover);
+  animation: 0.4s cubic-bezier(0.16, 1, 0.3, 1) loginAppear;
+}
+
+@keyframes loginAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-header .logo-container {
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto 1rem;
+  border-radius: var(--radius-lg);
+  background: var(--hover);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-header .logo-container:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 28px rgba(14, 165, 233, 0.4);
+}
+
+.login-header .logo-container img {
+  width: 2.5rem;
+  height: 2.5rem;
   display: block;
 }
 
-#login h1 {
+.login-header .title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.login-header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--textSecondary);
+  margin: 0;
+}
+
+.login-header .badge {
+  font-size: 0.65rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  color: var(--blue);
+  background: var(--hover);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.login-header .subtitle {
+  font-size: 0.85rem;
+  color: var(--textPrimary);
+  margin: 0;
+}
+
+.login-card form {
+  width: 100%;
+}
+
+.login-card .form-group {
+  margin-bottom: 1rem;
+}
+
+.login-card .form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.825rem;
+  font-weight: 500;
+  color: var(--textSecondary);
+  margin-bottom: 0.35rem;
+}
+
+.login-card .form-label i {
+  font-size: 1.05rem;
+  color: var(--textPrimary);
+}
+
+.login-card .input {
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--borderPrimary);
+  background: var(--surfaceSecondary);
+  color: var(--textSecondary);
+  font-size: 0.925rem;
+  padding: 0.5rem 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.login-card .input:focus {
+  border-color: var(--blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25);
+  background: var(--surfacePrimary);
+}
+
+.login-card .button {
+  height: 2.75rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--blue) 0%, var(--dark-blue) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.login-card .button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.45);
+}
+
+.login-card .button:active {
+  transform: translateY(0);
+}
+
+.login-card .toggle-link {
   text-align: center;
-  font-size: 2.5em;
-  margin: 0.4em 0 0.67em;
+  margin: 1.25rem 0 0;
+  color: var(--blue);
+  font-weight: 500;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color 0.15s ease;
 }
 
-#login form {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 16em;
-  width: 90%;
+.login-card .toggle-link:hover {
+  text-decoration: underline;
+  color: var(--dark-blue);
 }
 
-#login.recaptcha form {
-  min-width: 304px;
-}
-
-#login #recaptcha {
-  margin: 0.5em 0 0;
-}
-
-#login .wrong {
-  background: var(--red);
-  color: #fff;
-  padding: 0.5em;
+.login-card .wrong {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: var(--red);
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
   text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
   animation: 0.2s opac forwards;
 }
 
-#login .logout-message {
-  background: var(--icon-orange);
-  color: #fff;
-  padding: 0.5em;
+.login-card .logout-message {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: var(--icon-yellow);
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
   text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
   animation: 0.2s opac forwards;
-  text-transform: none;
 }
 
 @keyframes opac {
@@ -61,14 +248,4 @@
   100% {
     opacity: 1;
   }
-}
-
-#login p {
-  cursor: pointer;
-  text-align: right;
-  color: var(--blue);
-  text-transform: lowercase;
-  font-weight: 500;
-  font-size: 0.9rem;
-  margin: 0.5rem 0;
 }

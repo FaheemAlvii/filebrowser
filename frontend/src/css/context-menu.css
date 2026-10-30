@@ -1,21 +1,53 @@
 .context-menu {
   position: absolute;
   background: var(--surfacePrimary);
-  min-width: 180px;
-  max-width: 220px;
-  border: 1px solid var(--borderSecondary);
-  box-shadow: 0 2px 4px var(--borderPrimary);
-  z-index: 999;
+  min-width: 190px;
+  max-width: 240px;
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow-hover);
+  padding: 0.35rem;
+  z-index: 9999;
+  animation: 0.12s ease menuPop;
+}
+
+@keyframes menuPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .context-menu .action {
-  display: block;
   width: 100%;
-  border-radius: 0;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--textSecondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s ease;
+}
+
+.context-menu .action:hover {
+  background: var(--hover);
+  color: var(--blue);
+}
+
+.context-menu .action i {
+  font-size: 1.15rem;
+  color: inherit;
 }
 
 .context-menu .action .counter {
-  left: 1.75em;
+  left: 2rem;
 }

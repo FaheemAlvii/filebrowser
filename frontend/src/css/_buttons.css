@@ -1,18 +1,24 @@
 .button {
   outline: 0;
-  border: 0;
-  padding: 0.5em 1em;
-  border-radius: 0.1em;
+  border: 1px solid transparent;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   background: var(--blue);
-  color: white;
-  border: 1px solid var(--divider);
-  box-shadow: 0 0 5px var(--divider);
-  transition: 0.1s ease all;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.875rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
 }
 
 .button:hover {
   background-color: var(--dark-blue);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
 .button--block {
@@ -25,31 +31,47 @@
   background: var(--red);
 }
 
+.button--red:hover {
+  background: var(--dark-red);
+}
+
 .button--blue {
   background: var(--blue);
 }
 
 .button--flat {
-  color: var(--dark-blue);
+  color: var(--textSecondary);
   background: transparent;
-  box-shadow: 0 0 0;
-  border: 0;
-  text-transform: uppercase;
+  box-shadow: none;
+  border: 1px solid transparent;
+  text-transform: none;
 }
 
 .button--flat:hover {
-  background: var(--surfaceSecondary);
+  background: var(--hover);
+  color: var(--blue);
 }
 
 .button--flat.button--red {
+  color: var(--red);
+}
+
+.button--flat.button--red:hover {
+  background: rgba(239, 68, 68, 0.1);
   color: var(--dark-red);
 }
 
 .button--flat.button--grey {
-  color: #6f6f6f;
+  color: var(--textPrimary);
+}
+
+.button--flat.button--grey:hover {
+  background: var(--surfaceSecondary);
+  color: var(--textSecondary);
 }
 
 .button[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }

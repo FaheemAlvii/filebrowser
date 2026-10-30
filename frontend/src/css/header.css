@@ -1,17 +1,24 @@
 header {
   z-index: 1000;
-  background: var(--surfacePrimary);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--divider);
-  box-shadow: 0 0 5px var(--borderPrimary);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
   position: fixed;
   top: 0;
-  left: 0;
+  left: 16rem;
   height: 4em;
-  width: 100%;
-  padding: 0;
+  width: calc(100% - 16rem);
+  padding: 0.5em 1.25em;
   display: flex;
-  padding: 0.5em 0.5em 0.5em 1em;
   align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+html[dir="rtl"] header {
+  left: 0;
+  right: 16rem;
 }
 
 header > * {
@@ -24,7 +31,9 @@ header title {
   padding: 0 1em;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-size: 1.2em;
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--textSecondary);
 }
 
 header .overlay {
@@ -43,7 +52,26 @@ header img {
 }
 
 header img {
-  height: 2.5em;
+  height: 2.25em;
+  border-radius: var(--radius-sm);
+}
+
+header .action {
+  border-radius: var(--radius-sm);
+  color: var(--textSecondary);
+  background: transparent;
+  padding: 0.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+header .action:hover {
+  background: var(--hover);
+  color: var(--blue);
 }
 
 header .action span {
@@ -66,9 +94,9 @@ header .menu-button {
 
 #search {
   position: relative;
-  height: 100%;
+  height: 2.6em;
   width: 100%;
-  max-width: 25em;
+  max-width: 26em;
 }
 
 #search.active {
@@ -83,23 +111,30 @@ header .menu-button {
 
 #search #input {
   background: var(--surfaceSecondary);
-  border-color: var(--surfacePrimary);
+  border: 1px solid var(--borderPrimary);
   display: flex;
   height: 100%;
-  padding: 0em 0.75em;
-  border-radius: 0.3em;
-  transition: 0.1s ease all;
+  padding: 0 0.85em;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
   align-items: center;
   z-index: 2;
 }
 
+#search #input:focus-within {
+  border-color: var(--blue);
+  background: var(--surfacePrimary);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
 #search #input input::placeholder {
-  color: var(--textSecondary);
+  color: var(--textPrimary);
+  font-size: 0.875rem;
 }
 
 #search.active #input {
-  border-bottom: 1px solid var(--borderPrimary);
-  box-shadow: 0 0 5px var(--borderPrimary);
+  border-bottom: 1px solid var(--divider);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   background: var(--surfacePrimary);
   height: 4em;
 }
@@ -115,8 +150,10 @@ header .menu-button {
 
 #search #input > .action,
 #search #input > i {
-  margin-right: 0.3em;
+  margin-right: 0.5em;
   user-select: none;
+  font-size: 1.25rem;
+  color: var(--textPrimary);
 }
 
 #search input {
@@ -124,44 +161,42 @@ header .menu-button {
   border: 0;
   background-color: transparent;
   padding: 0;
+  font-size: 0.875rem;
+  color: var(--textSecondary);
 }
 
 #search #result {
   visibility: visible;
   max-height: none;
-  background: var(--background);
+  background: var(--surfacePrimary);
   text-align: left;
   padding: 0;
   color: var(--textPrimary);
   height: 0;
-  transition:
-    0.1s ease height,
-    0.1s ease padding;
+  transition: 0.15s ease height, 0.15s ease padding;
   overflow-x: hidden;
   overflow-y: auto;
   z-index: 1;
+  box-shadow: var(--card-shadow);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
 }
 
 html[dir="rtl"] #search #result {
   direction: ltr;
+  text-align: right;
 }
 
 #search #result > div > *:first-child {
   margin-top: 0;
 }
 
-html[dir="rtl"] #search #result {
-  text-align: right;
-}
-
-/*** RTL - Keep search result LTR because it has paths (in english) ***/
 html[dir="rtl"] #search #result ul > * {
   direction: ltr;
   text-align: left;
 }
 
 #search.active #result {
-  padding: 0.5em;
+  padding: 1em;
   height: calc(100% - 4em);
 }
 
@@ -172,11 +207,11 @@ html[dir="rtl"] #search #result ul > * {
 }
 
 #search li {
-  margin-bottom: 0.5em;
+  margin-bottom: 0.35em;
 }
 
 #search #result > div {
-  max-width: 45em;
+  max-width: 48em;
   margin: 0 auto;
 }
 
@@ -205,44 +240,37 @@ html[dir="rtl"] #search #result ul > * {
 #search.active #result ul li a {
   display: flex;
   align-items: center;
-  padding: 0.3em 0;
+  padding: 0.6em 0.8em;
+  border-radius: var(--radius-sm);
+  color: var(--textSecondary);
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
+}
+
+#search.active #result ul li a:hover {
+  background: var(--hover);
+  color: var(--blue);
 }
 
 #search.active #result ul li a i {
-  margin-right: 0.3em;
+  margin-right: 0.6em;
+  font-size: 1.25rem;
 }
-
-/* I dont think we need these anymore */
-/* #search::-webkit-input-placeholder {
-  color: var(--textPrimary);
-}
-
-#search::-moz-placeholder {
-  opacity: 1;
-  color: var(--textPrimary);
-}
-
-#search:-ms-input-placeholder {
-  color: var(--textPrimary);
-}
-
-#search #input input::placeholder {
-  color: var(--textPrimary);
-} */
 
 #search .boxes {
   border: 1px solid var(--borderPrimary);
-  box-shadow: 0 0 5px var(--borderPrimary);
+  box-shadow: var(--card-shadow);
   background: var(--surfacePrimary);
-  margin: 1em 0;
+  border-radius: var(--radius-md);
+  margin: 1.5em 0;
+  padding: 1em;
 }
 
 #search .boxes h3 {
-  margin: 0;
-  font-weight: 500;
-  font-size: 1em;
+  margin: 0 0 1em;
+  font-weight: 600;
+  font-size: 0.95em;
   color: var(--textSecondary);
-  padding: 0.5em;
 }
 
 html[dir="rtl"] #search .boxes h3 {
@@ -252,28 +280,92 @@ html[dir="rtl"] #search .boxes h3 {
 #search .boxes > div {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-right: -1em;
-  margin-bottom: -1em;
+  gap: 1em;
 }
 
 #search .boxes > div > div {
-  background: var(--blue);
-  color: #fff;
+  background: var(--surfaceSecondary);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-md);
+  color: var(--textSecondary);
   text-align: center;
-  width: 10em;
-  padding: 1em;
+  width: 9em;
+  padding: 1.25em 1em;
   cursor: pointer;
-  margin-bottom: 1em;
-  margin-right: 1em;
   flex-grow: 1;
+  transition: all 0.15s ease;
+}
+
+#search .boxes > div > div:hover {
+  background: var(--hover);
+  border-color: var(--blue);
+  color: var(--blue);
+  transform: translateY(-2px);
 }
 
 #search .boxes p {
-  margin: 1em 0 0;
+  margin: 0.5em 0 0;
+  font-weight: 500;
+  font-size: 0.875rem;
 }
 
 #search .boxes i {
-  color: #fff !important;
-  font-size: 3.5em;
+  color: var(--blue) !important;
+  font-size: 2.5em;
+}
+
+/* Dropdown menu matching odoo-server-reborn Radix popovers */
+#dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 1.25rem;
+  background: var(--surfacePrimary);
+  border: 1px solid var(--borderPrimary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow-hover);
+  padding: 0.35rem;
+  min-width: 12rem;
+  z-index: 1002;
+  display: none;
+}
+
+#dropdown.active {
+  display: block;
+  animation: 0.15s ease popoverAppear;
+}
+
+@keyframes popoverAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+#dropdown .action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--textSecondary);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s ease;
+}
+
+#dropdown .action:hover {
+  background: var(--hover);
+  color: var(--blue);
+}
+
+#dropdown .action span {
+  display: inline-block;
 }

@@ -1,16 +1,4 @@
-@media (max-width: 1024px) {
-  nav {
-    width: 10em;
-  }
-}
-
-@media (max-width: 1024px) {
-  main {
-    width: calc(100% - 13em);
-  }
-}
-
-@media (max-width: 736px) {
+@media (max-width: 768px) {
   body {
     padding-bottom: 5em;
   }
@@ -38,6 +26,11 @@
   #more {
     display: inherit;
   }
+  header {
+    left: 0 !important;
+    width: 100% !important;
+    padding: 0.5em 1em;
+  }
   header .overlay {
     width: 100%;
     height: 100%;
@@ -48,10 +41,10 @@
     top: 1em;
     right: 1em;
     display: block;
-    background: var(--surfaceSecondary);
-    box-shadow: 0 0 5px var(--borderPrimary);
+    background: var(--surfacePrimary);
+    box-shadow: var(--card-shadow-hover);
     transform: scale(0);
-    transition: 0.1s ease-in-out transform;
+    transition: 0.15s ease-in-out transform;
     transform-origin: top right;
     z-index: 99999;
   }
@@ -71,7 +64,7 @@
   #dropdown .action {
     display: flex;
     align-items: center;
-    border-radius: 0;
+    border-radius: var(--radius-sm);
     width: 100%;
   }
   #dropdown .action span:not(.counter) {
@@ -88,13 +81,14 @@
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    background: var(--surfaceSecondary);
-    box-shadow:
-      rgba(0, 0, 0, 0.06) 0px 1px 3px,
-      rgba(0, 0, 0, 0.12) 0px 1px 2px;
+    background: var(--surfacePrimary);
+    box-shadow: var(--card-shadow-hover);
+    border: 1px solid var(--borderPrimary);
+    border-radius: var(--radius-lg);
     width: 95%;
-    max-width: 20em;
-    z-index: 1;
+    max-width: 22em;
+    z-index: 100;
+    padding: 0.4em 0.6em;
   }
   #file-selection .action {
     border-radius: 50%;
@@ -103,7 +97,8 @@
   #file-selection > span {
     display: inline-block;
     margin-left: 1em;
-    color: var(--textPrimary);
+    color: var(--textSecondary);
+    font-weight: 500;
     margin-right: auto;
   }
   #file-selection .action span {
@@ -112,18 +107,18 @@
   nav {
     top: 0;
     z-index: 99999;
-    background: var(--surfaceSecondary);
+    background: var(--surfacePrimary);
     height: 100vh;
-    width: 16em;
+    width: 16rem;
     overflow-y: auto;
-    box-shadow: 0 0 5px var(--borderPrimary);
-    transition: 0.1s ease left;
-    left: -17em;
+    box-shadow: var(--card-shadow-hover);
+    transition: 0.2s ease transform, 0.2s ease left;
+    left: -17rem;
   }
 
   html[dir="rtl"] nav {
     left: unset;
-    right: -17em;
+    right: -17rem;
   }
   nav.active {
     left: 0;
@@ -140,7 +135,7 @@
 
   header .search-button,
   header .menu-button {
-    display: inherit;
+    display: inline-flex;
   }
   header img {
     display: none;
@@ -154,7 +149,7 @@
   }
 
   html[dir="rtl"] .breadcrumbs {
-    transform: translateX(16em);
+    transform: none;
   }
 
   html[dir="rtl"] #nav .wrapper {
@@ -166,8 +161,9 @@
   }
 
   main {
-    margin: 0 1em;
-    width: calc(100% - 2em);
+    margin: 0 !important;
+    width: 100% !important;
+    padding: 1rem;
   }
   #search {
     display: none;

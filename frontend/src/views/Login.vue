@@ -1,46 +1,84 @@
 <template>
   <div id="login" :class="{ recaptcha: recaptcha }">
-    <form @submit="submit">
-      <img :src="logoURL" alt="File Browser" />
-      <h1>{{ name }}</h1>
-      <p v-if="reason != null" class="logout-message">
-        {{ t(`login.logout_reasons.${reason}`) }}
-      </p>
-      <div v-if="error !== ''" class="wrong">{{ error }}</div>
+    <!-- Ambient glow orbs in background matching odoo-server-reborn -->
+    <div class="login-bg-decorations">
+      <div class="glow-orb glow-top"></div>
+      <div class="glow-orb glow-bottom"></div>
+    </div>
 
-      <input
-        autofocus
-        class="input input--block"
-        type="text"
-        autocapitalize="off"
-        v-model="username"
-        :placeholder="t('login.username')"
-      />
-      <input
-        class="input input--block"
-        type="password"
-        v-model="password"
-        :placeholder="t('login.password')"
-      />
-      <input
-        class="input input--block"
-        v-if="createMode"
-        type="password"
-        v-model="passwordConfirm"
-        :placeholder="t('login.passwordConfirm')"
-      />
+    <div class="login-card">
+      <div class="login-header">
+        <div class="logo-container">
+          <img :src="logoURL" :alt="name" />
+        </div>
+        <div class="title-row">
+          <h1>Welcome to {{ name }}</h1>
+          <span class="badge">CORE</span>
+        </div>
+        <p class="subtitle">Odoo Server File Manager</p>
+      </div>
 
-      <div v-if="recaptcha" id="recaptcha"></div>
-      <input
-        class="button button--block"
-        type="submit"
-        :value="createMode ? t('login.signup') : t('login.submit')"
-      />
+      <form @submit="submit">
+        <p v-if="reason != null" class="logout-message">
+          {{ t(`login.logout_reasons.${reason}`) }}
+        </p>
+        <div v-if="error !== ''" class="wrong">{{ error }}</div>
 
-      <p @click="toggleMode" v-if="signup">
-        {{ createMode ? t("login.loginInstead") : t("login.createAnAccount") }}
-      </p>
-    </form>
+        <div class="form-group">
+          <label class="form-label">
+            <i class="material-icons">person</i>
+            <span>{{ t("login.username") }}</span>
+          </label>
+          <input
+            autofocus
+            class="input input--block"
+            type="text"
+            autocapitalize="off"
+            v-model="username"
+            :placeholder="t('login.username')"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">
+            <i class="material-icons">lock</i>
+            <span>{{ t("login.password") }}</span>
+          </label>
+          <input
+            class="input input--block"
+            type="password"
+            v-model="password"
+            :placeholder="t('login.password')"
+          />
+        </div>
+
+        <div class="form-group" v-if="createMode">
+          <label class="form-label">
+            <i class="material-icons">lock_outline</i>
+            <span>{{ t("login.passwordConfirm") }}</span>
+          </label>
+          <input
+            class="input input--block"
+            type="password"
+            v-model="passwordConfirm"
+            :placeholder="t('login.passwordConfirm')"
+          />
+        </div>
+
+        <div v-if="recaptcha" id="recaptcha"></div>
+        <input
+          class="button button--block"
+          type="submit"
+          :value="createMode ? t('login.signup') : t('login.submit')"
+        />
+
+        <p class="toggle-link" @click="toggleMode" v-if="signup">
+          {{
+            createMode ? t("login.loginInstead") : t("login.createAnAccount")
+          }}
+        </p>
+      </form>
+    </div>
   </div>
 </template>
 

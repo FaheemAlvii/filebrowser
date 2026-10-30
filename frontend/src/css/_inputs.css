@@ -1,16 +1,24 @@
 .input {
-  background: var(--surfacePrimary);
+  background: var(--surfaceSecondary);
   color: var(--textSecondary);
   border: 1px solid var(--borderPrimary);
-  border-radius: 0.1em;
-  padding: 0.5em 1em;
-  transition: 0.2s ease all;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.85rem;
+  font-size: 0.875rem;
+  transition: all 0.15s ease;
   margin: 0;
+  box-sizing: border-box;
 }
 
-.input:hover,
-.input:focus {
+.input:hover {
   border-color: var(--borderSecondary);
+}
+
+.input:focus {
+  border-color: var(--blue);
+  background: var(--surfacePrimary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
 }
 
 .input--block {
@@ -20,8 +28,8 @@
 }
 
 .input--textarea {
-  line-height: 1.15;
-  font-family: monospace;
+  line-height: 1.4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   min-height: 10em;
   resize: vertical;
 }

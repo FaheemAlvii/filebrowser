@@ -76,7 +76,7 @@ func init() {
 
 	cobra.MousetrapHelpText = ""
 
-	rootCmd.SetVersionTemplate("File Browser version {{printf \"%s\" .Version}}\n")
+	rootCmd.SetVersionTemplate("OSFM version {{printf \"%s\" .Version}}\n")
 
 	// Flags available across the whole program
 	persistent := rootCmd.PersistentFlags()
@@ -117,7 +117,7 @@ func addServerFlags(flags *pflag.FlagSet) {
 
 var rootCmd = &cobra.Command{
 	Use:   "filebrowser",
-	Short: "A stylish web-based file browser",
+	Short: "OSFM - Odoo Server File Manager",
 	Long: `File Browser CLI lets you create the database to use with File Browser,
 manage your users and all the configurations without accessing the
 web interface.
@@ -448,7 +448,7 @@ func quickSetup(v *viper.Viper, s *storage.Storage) error {
 			},
 		},
 		AuthMethod: "",
-		Branding:   settings.Branding{},
+		Branding:   settings.Branding{Name: "OSFM"},
 		Tus: settings.Tus{
 			ChunkSize:  settings.DefaultTusChunkSize,
 			RetryCount: settings.DefaultTusRetryCount,

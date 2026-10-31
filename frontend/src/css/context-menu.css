@@ -1,5 +1,5 @@
 .context-menu {
-  position: absolute;
+  position: fixed;
   background: var(--surfacePrimary);
   min-width: 190px;
   max-width: 240px;
@@ -7,7 +7,7 @@
   border-radius: var(--radius-md);
   box-shadow: var(--card-shadow-hover);
   padding: 0.35rem;
-  z-index: 9999;
+  z-index: 100000;
   animation: 0.12s ease menuPop;
 }
 

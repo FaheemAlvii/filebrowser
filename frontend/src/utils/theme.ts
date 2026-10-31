@@ -127,7 +127,7 @@ export const getEditorTheme = (themeName: string) => {
 
 /**
  * Automatically sync all themes from parent OSM container when embedded in an iframe,
- * or from shared localStorage / storage events / postMessage.
+ * or from URL params / shared localStorage / postMessage.
  */
 export const syncThemeFromParent = (): boolean => {
   const embedded = isEmbedded;
@@ -136,8 +136,28 @@ export const syncThemeFromParent = (): boolean => {
     html.classList.add("embedded");
   }
 
+  // 1. Check URL query param ?theme=... (works across all origins, protocols, and ports)
+  try {
+    const urlTheme = new URLSearchParams(window.location.search).get("theme");
+    if (urlTheme) {
+      setTheme(urlTheme);
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  // 2. Safe check if window.parent is same-origin before touching window.parent.document
+  let canAccessParentDoc = false;
   try {
     if (window.self !== window.top && window.parent) {
+      canAccessParentDoc = window.parent.location.origin === window.location.origin;
+    }
+  } catch (e) {
+    canAccessParentDoc = false;
+  }
+
+  if (canAccessParentDoc) {
+    try {
       const parentDoc = window.parent.document;
       if (parentDoc && parentDoc.documentElement) {
         const parentHtml = parentDoc.documentElement;
@@ -162,12 +182,12 @@ export const syncThemeFromParent = (): boolean => {
           attributeFilter: ["class"],
         });
       }
+    } catch (e) {
+      // Cross-origin restriction fallback
     }
-  } catch (e) {
-    // Cross-origin restriction fallback
   }
 
-  // Cross-origin or same-origin postMessage listener
+  // 3. PostMessage listener (works seamlessly across all origins, protocols, ports)
   window.addEventListener("message", (event) => {
     try {
       if (!event.data) return;
@@ -175,7 +195,7 @@ export const syncThemeFromParent = (): boolean => {
         typeof event.data === "string"
           ? event.data
           : event.data.theme || event.data.type || "";
-      if (dataStr) {
+      if (dataStr && !dataStr.startsWith("OSFM_")) {
         setTheme(dataStr);
       }
     } catch (err) {
@@ -183,14 +203,23 @@ export const syncThemeFromParent = (): boolean => {
     }
   });
 
-  // Storage listener (syncs across tabs or iframe on same domain)
+  // Notify parent container that OSFM is ready to receive theme
+  try {
+    if (window.self !== window.top && window.parent) {
+      window.parent.postMessage({ type: "OSFM_READY" }, "*");
+    }
+  } catch (e) {
+    // ignore
+  }
+
+  // 4. Storage listener (syncs across tabs or iframe on same domain)
   window.addEventListener("storage", (event) => {
     if (event.key === "theme" && event.newValue) {
       setTheme(event.newValue);
     }
   });
 
-  // Check saved theme in localStorage
+  // 5. Check saved theme in localStorage
   try {
     const saved = localStorage.getItem("theme");
     if (saved && !embedded) {

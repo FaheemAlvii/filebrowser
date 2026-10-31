@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @contextmenu="handleListingContextMenu">
     <header-bar showMenu showLogo>
       <search />
       <title />
@@ -292,6 +292,81 @@
           </div>
         </div>
       </div>
+
+      <context-menu
+        :show="isContextMenuVisible"
+        :pos="contextMenuPos"
+        @hide="hideContextMenu"
+      >
+        <template v-if="fileStore.selectedCount > 0">
+          <action
+            v-if="headerButtons.download"
+            icon="file_download"
+            :label="t('buttons.download')"
+            @action="download"
+            :counter="fileStore.selectedCount"
+          />
+          <action
+            v-if="headerButtons.rename && fileStore.selectedCount === 1"
+            icon="mode_edit"
+            :label="t('buttons.rename')"
+            show="rename"
+          />
+          <action
+            v-if="headerButtons.copy"
+            id="copy-button"
+            icon="content_copy"
+            :label="t('buttons.copyFile')"
+            show="copy"
+          />
+          <action
+            v-if="headerButtons.move"
+            id="move-button"
+            icon="forward"
+            :label="t('buttons.moveFile')"
+            show="move"
+          />
+          <action
+            v-if="headerButtons.delete"
+            id="delete-button"
+            icon="delete"
+            :label="t('buttons.delete')"
+            show="delete"
+          />
+          <action
+            v-if="headerButtons.share"
+            icon="share"
+            :label="t('buttons.share')"
+            show="share"
+          />
+          <action icon="info" :label="t('buttons.info')" show="info" />
+          <div class="context-divider"></div>
+        </template>
+
+        <action
+          v-if="canCreate"
+          icon="create_new_folder"
+          :label="t('sidebar.newFolder')"
+          @action="createNewDir"
+        />
+        <action
+          v-if="canCreate"
+          icon="note_add"
+          :label="t('sidebar.newFile')"
+          @action="createNewFile"
+        />
+        <action
+          v-if="headerButtons.upload"
+          icon="file_upload"
+          :label="t('buttons.upload')"
+          @action="uploadFunc"
+        />
+        <action
+          icon="refresh"
+          :label="t('buttons.refresh') || 'Refresh'"
+          @action="refreshFunc"
+        />
+      </context-menu>
     </template>
   </div>
 </template>
@@ -1074,18 +1149,23 @@ const refreshFunc = () => {
 };
 
 const handleListingContextMenu = (event: MouseEvent) => {
-  event.preventDefault();
   const target = event.target as HTMLElement | null;
-  const isItem = target?.closest(".item:not(.header)");
+  if (target?.closest("header, .overlay, .modal, #dropdown, .prompt")) {
+    return;
+  }
+  event.preventDefault();
 
+  const isItem = target?.closest(".item:not(.header)");
   if (!isItem) {
     fileStore.selected = [];
   }
 
   isContextMenuVisible.value = true;
+  const menuWidth = 220;
+  const menuHeight = 280;
   contextMenuPos.value = {
-    x: event.clientX + 8,
-    y: event.clientY + Math.floor(window.scrollY),
+    x: Math.max(8, Math.min(event.clientX, window.innerWidth - menuWidth)),
+    y: Math.max(8, Math.min(event.clientY, window.innerHeight - menuHeight)),
   };
 };
 

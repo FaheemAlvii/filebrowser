@@ -20,6 +20,17 @@ const tusSettings = window.FileBrowser.TusSettings;
 const origin = window.location.origin;
 const tusEndpoint = `/api/tus`;
 const hideLoginButton = window.FileBrowser.HideLoginButton;
+const isEmbedded: boolean = ((): boolean => {
+  try {
+    return (
+      window.self !== window.top ||
+      window.location.search.includes("embedded=true") ||
+      window.location.search.includes("embed=true")
+    );
+  } catch (e) {
+    return true;
+  }
+})();
 
 export {
   name,
@@ -43,4 +54,5 @@ export {
   origin,
   tusEndpoint,
   hideLoginButton,
+  isEmbedded,
 };

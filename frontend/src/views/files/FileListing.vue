@@ -138,9 +138,13 @@
         v-if="
           (fileStore.req?.numDirs ?? 0) + (fileStore.req?.numFiles ?? 0) == 0
         "
+        class="empty-listing-container"
+        data-clear-on-click="true"
+        @click="handleEmptyAreaClick"
+        @contextmenu="handleListingContextMenu"
       >
-        <h2 class="message">
-          <i class="material-icons">sentiment_dissatisfied</i>
+        <h2 class="message" data-clear-on-click="true">
+          <i class="material-icons">folder_open</i>
           <span>{{ t("files.lonely") }}</span>
         </h2>
         <input
@@ -167,6 +171,7 @@
         data-clear-on-click="true"
         :class="authStore.user?.viewMode ?? ''"
         @click="handleEmptyAreaClick"
+        @contextmenu="handleListingContextMenu"
       >
         <div>
           <div class="item header">
@@ -218,7 +223,6 @@
         <div
           v-if="fileStore.req?.numDirs ?? false"
           data-clear-on-click="true"
-          @contextmenu="showContextMenu"
         >
           <item
             v-for="item in dirs"
@@ -241,7 +245,6 @@
         <div
           v-if="fileStore.req?.numFiles ?? false"
           data-clear-on-click="true"
-          @contextmenu="showContextMenu"
         >
           <item
             v-for="item in files"
@@ -257,53 +260,7 @@
           >
           </item>
         </div>
-        <context-menu
-          :show="isContextMenuVisible"
-          :pos="contextMenuPos"
-          @hide="hideContextMenu"
-        >
-          <action
-            v-if="headerButtons.share"
-            icon="share"
-            :label="t('buttons.share')"
-            show="share"
-          />
-          <action
-            v-if="headerButtons.rename"
-            icon="mode_edit"
-            :label="t('buttons.rename')"
-            show="rename"
-          />
-          <action
-            v-if="headerButtons.copy"
-            id="copy-button"
-            icon="content_copy"
-            :label="t('buttons.copyFile')"
-            show="copy"
-          />
-          <action
-            v-if="headerButtons.move"
-            id="move-button"
-            icon="forward"
-            :label="t('buttons.moveFile')"
-            show="move"
-          />
-          <action
-            v-if="headerButtons.delete"
-            id="delete-button"
-            icon="delete"
-            :label="t('buttons.delete')"
-            show="delete"
-          />
-          <action
-            v-if="headerButtons.download"
-            icon="file_download"
-            :label="t('buttons.download')"
-            @action="download"
-            :counter="fileStore.selectedCount"
-          />
-          <action icon="info" :label="t('buttons.info')" show="info" />
-        </context-menu>
+
 
         <input
           style="display: none"
@@ -1099,14 +1056,40 @@ const revealPreviousItem = () => {
   return true;
 };
 
-const showContextMenu = (event: MouseEvent) => {
+const canCreate = computed(() => authStore.user?.perm?.create ?? false);
+
+const createNewDir = () => {
+  hideContextMenu();
+  layoutStore.showHover("newDir");
+};
+
+const createNewFile = () => {
+  hideContextMenu();
+  layoutStore.showHover("newFile");
+};
+
+const refreshFunc = () => {
+  hideContextMenu();
+  fileStore.reload = true;
+};
+
+const handleListingContextMenu = (event: MouseEvent) => {
   event.preventDefault();
+  const target = event.target as HTMLElement | null;
+  const isItem = target?.closest(".item:not(.header)");
+
+  if (!isItem) {
+    fileStore.selected = [];
+  }
+
   isContextMenuVisible.value = true;
   contextMenuPos.value = {
     x: event.clientX + 8,
     y: event.clientY + Math.floor(window.scrollY),
   };
 };
+
+const showContextMenu = handleListingContextMenu;
 
 const hideContextMenu = () => {
   isContextMenuVisible.value = false;

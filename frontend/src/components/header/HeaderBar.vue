@@ -1,8 +1,8 @@
 <template>
   <header>
-    <img v-if="showLogo" :src="logoURL" alt="OSFM" />
+    <img v-if="showLogo && !isEmbedded" :src="logoURL" alt="OSFM" />
     <Action
-      v-if="showMenu"
+      v-if="showMenu && !isEmbedded"
       class="menu-button"
       icon="menu"
       :label="t('buttons.toggleSidebar')"
@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { useLayoutStore } from "@/stores/layout";
 
-import { logoURL } from "@/utils/constants";
+import { logoURL, isEmbedded } from "@/utils/constants";
 
 import Action from "@/components/header/Action.vue";
 import { computed, useSlots } from "vue";

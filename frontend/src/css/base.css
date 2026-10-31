@@ -513,3 +513,45 @@ body > div[style*="z-index: 9990"] {
   outline: 2px solid rgba(14, 165, 233, 0.4);
   outline-offset: 1px;
 }
+
+
+/* Embedded mode (when running inside OSM iframe) */
+html.embedded nav,
+body.embedded nav,
+.embedded nav {
+  display: none !important;
+}
+
+html.embedded header,
+body.embedded header,
+.embedded header {
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+}
+
+html.embedded main,
+body.embedded main,
+.embedded main {
+  left: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100% !important;
+}
+
+html.embedded .menu-button,
+body.embedded .menu-button,
+.embedded .menu-button {
+  display: none !important;
+}
+
+/* Empty area context menu styling */
+.empty-listing-container {
+  min-height: calc(100vh - 8rem);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}

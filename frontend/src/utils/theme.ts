@@ -1,32 +1,103 @@
-import { theme } from "./constants";
+import { theme, isEmbedded } from "./constants";
 import "ace-builds";
 import { themesByName } from "ace-builds/src-noconflict/ext-themelist";
+
+const THEME_CLASSES = ["dark", "light", "corporate", "minimal", "vibrant"];
 
 export const getTheme = (): UserTheme => {
   return (document.documentElement.className as UserTheme) || theme;
 };
 
+export const applyThemeClasses = (classes: string[] | DOMTokenList, themeName?: string) => {
+  const html = document.documentElement;
+  const wasEmbedded = html.classList.contains("embedded") || isEmbedded;
+
+  THEME_CLASSES.forEach((cls) => html.classList.remove(cls));
+
+  const classList = Array.from(classes);
+  let hasDark = classList.includes("dark");
+  let variant = "";
+
+  for (const name of ["corporate", "minimal", "vibrant"]) {
+    if (classList.includes(name)) {
+      variant = name;
+      break;
+    }
+  }
+
+  if (themeName) {
+    const lower = themeName.toLowerCase();
+    if (lower.includes("dark")) hasDark = true;
+    for (const name of ["corporate", "minimal", "vibrant"]) {
+      if (lower.includes(name)) variant = name;
+    }
+  }
+
+  if (variant) {
+    html.classList.add(variant);
+  }
+  if (hasDark) {
+    html.classList.add("dark");
+  } else {
+    html.classList.add("light");
+  }
+
+  if (wasEmbedded) {
+    html.classList.add("embedded");
+  }
+
+  const compositeTheme = variant
+    ? hasDark
+      ? `${variant}-dark`
+      : variant
+    : hasDark
+    ? "dark"
+    : "light";
+
+  try {
+    localStorage.setItem("theme", compositeTheme);
+  } catch (e) {
+    // ignore
+  }
+};
+
 export const setTheme = (newTheme: UserTheme) => {
   const html = document.documentElement;
-  if (!newTheme) {
-    html.className = getMediaPreference();
-  } else {
-    html.className = newTheme;
+  const wasEmbedded = html.classList.contains("embedded") || isEmbedded;
+
+  THEME_CLASSES.forEach((cls) => html.classList.remove(cls));
+
+  const lower = (newTheme || "").toLowerCase();
+  let variant = "";
+  for (const name of ["corporate", "minimal", "vibrant"]) {
+    if (lower.includes(name)) variant = name;
   }
+  const isDark = lower.includes("dark") || (!lower && getMediaPreference() === "dark");
+
+  if (variant) html.classList.add(variant);
+  if (isDark) html.classList.add("dark");
+  else html.classList.add("light");
+
+  if (wasEmbedded) html.classList.add("embedded");
+
   try {
-    localStorage.setItem("theme", newTheme);
+    localStorage.setItem("theme", newTheme || (isDark ? "dark" : "light"));
   } catch (e) {
-    // ignore localstorage errors
+    // ignore
   }
 };
 
 export const toggleTheme = (): void => {
-  const activeTheme = getTheme();
-  if (activeTheme === "light") {
-    setTheme("dark");
-  } else {
-    setTheme("light");
+  const html = document.documentElement;
+  const isDark = html.classList.contains("dark");
+  let variant = "";
+  for (const name of ["corporate", "minimal", "vibrant"]) {
+    if (html.classList.contains(name)) variant = name;
   }
+
+  const nextDark = !isDark;
+  const nextTheme = variant ? (nextDark ? `${variant}-dark` : variant) : (nextDark ? "dark" : "light");
+  setTheme(nextTheme);
 };
 
 export const getMediaPreference = (): UserTheme => {
@@ -47,7 +118,7 @@ export const getEditorTheme = (themeName: string) => {
   const themeKey = themeName.replace("ace/theme/", "");
   if (themesByName[themeKey] !== undefined) {
     return themeName;
-  } else if (getTheme() === "dark") {
+  } else if (document.documentElement.classList.contains("dark")) {
     return "ace/theme/twilight";
   } else {
     return "ace/theme/chrome";
@@ -55,14 +126,18 @@ export const getEditorTheme = (themeName: string) => {
 };
 
 /**
- * Automatically sync theme from parent OSM container when embedded in an iframe,
+ * Automatically sync all themes from parent OSM container when embedded in an iframe,
  * or from shared localStorage / storage events / postMessage.
  */
 export const syncThemeFromParent = (): boolean => {
-  let isEmbedded = false;
+  const embedded = isEmbedded;
+  const html = document.documentElement;
+  if (embedded) {
+    html.classList.add("embedded");
+  }
+
   try {
     if (window.self !== window.top && window.parent) {
-      isEmbedded = true;
       const parentDoc = window.parent.document;
       if (parentDoc && parentDoc.documentElement) {
         const parentHtml = parentDoc.documentElement;
@@ -71,13 +146,9 @@ export const syncThemeFromParent = (): boolean => {
           try {
             parentTheme = (window.parent.localStorage?.getItem("theme") || "").toLowerCase();
           } catch (err) {
-            // cross-origin localStorage access fallback
+            // cross-origin localStorage fallback
           }
-          const isDark =
-            parentHtml.classList.contains("dark") ||
-            parentTheme.includes("dark");
-
-          setTheme(isDark ? "dark" : "light");
+          applyThemeClasses(parentHtml.classList, parentTheme);
         };
 
         applyFromParent();
@@ -104,11 +175,8 @@ export const syncThemeFromParent = (): boolean => {
         typeof event.data === "string"
           ? event.data
           : event.data.theme || event.data.type || "";
-      const lower = String(dataStr).toLowerCase();
-      if (lower.includes("dark")) {
-        setTheme("dark");
-      } else if (lower.includes("light")) {
-        setTheme("light");
+      if (dataStr) {
+        setTheme(dataStr);
       }
     } catch (err) {
       // ignore
@@ -118,21 +186,20 @@ export const syncThemeFromParent = (): boolean => {
   // Storage listener (syncs across tabs or iframe on same domain)
   window.addEventListener("storage", (event) => {
     if (event.key === "theme" && event.newValue) {
-      const lower = event.newValue.toLowerCase();
-      setTheme(lower.includes("dark") ? "dark" : "light");
+      setTheme(event.newValue);
     }
   });
 
   // Check saved theme in localStorage
   try {
     const saved = localStorage.getItem("theme");
-    if (saved && !isEmbedded) {
-      setTheme(saved.toLowerCase().includes("dark") ? "dark" : "light");
+    if (saved && !embedded) {
+      setTheme(saved);
       return true;
     }
   } catch (e) {
     // ignore
   }
 
-  return isEmbedded;
+  return embedded;
 };

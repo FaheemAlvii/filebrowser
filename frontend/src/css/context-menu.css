@@ -51,3 +51,9 @@
 .context-menu .action .counter {
   left: 2rem;
 }
+
+.context-menu .context-divider {
+  height: 1px;
+  background: var(--divider);
+  margin: 0.35rem 0.25rem;
+}

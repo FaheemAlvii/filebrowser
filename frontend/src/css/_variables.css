@@ -81,3 +81,148 @@
   --glass-bg: rgba(11, 15, 25, 0.85);
   --glass-border: rgba(30, 41, 59, 0.8);
 }
+
+
+/* Corporate Theme - Professional royal-blue focused design */
+:root.corporate {
+  --blue: #2563eb;
+  --dark-blue: #1d4ed8;
+  --action: #2563eb;
+  --iconPrimary: #2563eb;
+  --background: #f8fafc;
+  --surfacePrimary: #ffffff;
+  --surfaceSecondary: #f1f5f9;
+  --surfaceTertiary: #e2e8f0;
+  --divider: #e2e8f0;
+  --textPrimary: #64748b;
+  --textSecondary: #0f172a;
+  --item-selected: rgba(37, 99, 235, 0.1);
+  --hover: rgba(37, 99, 235, 0.08);
+  --borderPrimary: #e2e8f0;
+  --radius: 0.375rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+/* Corporate Dark Theme */
+:root.corporate.dark {
+  --blue: #3b82f6;
+  --dark-blue: #60a5fa;
+  --action: #3b82f6;
+  --iconPrimary: #3b82f6;
+  --background: #0f172a;
+  --surfacePrimary: #131c31;
+  --surfaceSecondary: #1e293b;
+  --surfaceTertiary: #334155;
+  --divider: #1e293b;
+  --textPrimary: #94a3b8;
+  --textSecondary: #f1f5f9;
+  --item-selected: rgba(59, 130, 246, 0.16);
+  --hover: rgba(59, 130, 246, 0.1);
+  --borderPrimary: #1e293b;
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --card-shadow-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
+  --glass-bg: rgba(15, 23, 42, 0.9);
+  --glass-border: rgba(30, 41, 59, 0.8);
+  --radius: 0.375rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+}
+
+/* Minimal Theme - Clean, subtle monochrome design */
+:root.minimal {
+  --blue: #334155;
+  --dark-blue: #1e293b;
+  --action: #334155;
+  --iconPrimary: #475569;
+  --background: #fafafa;
+  --surfacePrimary: #ffffff;
+  --surfaceSecondary: #f4f4f5;
+  --surfaceTertiary: #e4e4e7;
+  --divider: #e4e4e7;
+  --textPrimary: #71717a;
+  --textSecondary: #18181b;
+  --item-selected: rgba(0, 0, 0, 0.06);
+  --hover: rgba(0, 0, 0, 0.04);
+  --borderPrimary: #e4e4e7;
+  --card-shadow: none;
+  --card-shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --glass-bg: rgba(255, 255, 255, 0.95);
+  --glass-border: rgba(228, 228, 231, 0.8);
+  --radius: 0.25rem;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+}
+
+/* Minimal Dark Theme */
+:root.minimal.dark {
+  --blue: #a1a1aa;
+  --dark-blue: #e4e4e7;
+  --action: #d4d4d8;
+  --iconPrimary: #a1a1aa;
+  --background: #121214;
+  --surfacePrimary: #18181b;
+  --surfaceSecondary: #27272a;
+  --surfaceTertiary: #3f3f46;
+  --divider: #27272a;
+  --textPrimary: #a1a1aa;
+  --textSecondary: #f4f4f5;
+  --item-selected: rgba(255, 255, 255, 0.08);
+  --hover: rgba(255, 255, 255, 0.05);
+  --borderPrimary: #27272a;
+  --card-shadow: none;
+  --card-shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(24, 24, 27, 0.95);
+  --glass-border: rgba(39, 39, 42, 0.8);
+  --radius: 0.25rem;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+}
+
+/* Vibrant Theme - Colorful energetic teal & cyan design */
+:root.vibrant {
+  --blue: #06b6d4;
+  --dark-blue: #0891b2;
+  --action: #06b6d4;
+  --iconPrimary: #06b6d4;
+  --background: #f0fdf4;
+  --surfacePrimary: #ffffff;
+  --surfaceSecondary: #ecfdf5;
+  --surfaceTertiary: #ccfbf1;
+  --divider: #e0f2fe;
+  --textPrimary: #475569;
+  --textSecondary: #0f172a;
+  --item-selected: rgba(6, 182, 212, 0.12);
+  --hover: rgba(6, 182, 212, 0.08);
+  --borderPrimary: #bae6fd;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+}
+
+/* Vibrant Dark Theme */
+:root.vibrant.dark {
+  --blue: #22d3ee;
+  --dark-blue: #06b6d4;
+  --action: #22d3ee;
+  --iconPrimary: #22d3ee;
+  --background: #030712;
+  --surfacePrimary: #0b1120;
+  --surfaceSecondary: #111c35;
+  --surfaceTertiary: #1e293b;
+  --divider: #1e293b;
+  --textPrimary: #94a3b8;
+  --textSecondary: #f8fafc;
+  --item-selected: rgba(34, 211, 238, 0.18);
+  --hover: rgba(34, 211, 238, 0.12);
+  --borderPrimary: #162447;
+  --radius: 0.75rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+}

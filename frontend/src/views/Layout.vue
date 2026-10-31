@@ -7,7 +7,7 @@
         }"
       ></div>
     </div>
-    <sidebar></sidebar>
+    <sidebar v-if="!isEmbedded"></sidebar>
     <main>
       <router-view></router-view>
       <shell
@@ -30,7 +30,7 @@ import Sidebar from "@/components/Sidebar.vue";
 import Prompts from "@/components/prompts/Prompts.vue";
 import Shell from "@/components/Shell.vue";
 import UploadFiles from "@/components/prompts/UploadFiles.vue";
-import { enableExec } from "@/utils/constants";
+import { enableExec, isEmbedded } from "@/utils/constants";
 import { computed, watch } from "vue";
 import { useRoute } from "vue-router";
 

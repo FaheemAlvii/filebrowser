@@ -9,7 +9,12 @@
 import { ref, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { setHtmlLocale } from "./i18n";
-import { getMediaPreference, getTheme, setTheme } from "./utils/theme";
+import {
+  getMediaPreference,
+  getTheme,
+  setTheme,
+  syncThemeFromParent,
+} from "./utils/theme";
 import { name } from "./utils/constants";
 
 const { locale } = useI18n();
@@ -17,7 +22,11 @@ const { locale } = useI18n();
 const userTheme = ref<UserTheme>(getTheme() || getMediaPreference());
 
 onMounted(() => {
-  setTheme(userTheme.value);
+  // Automatically sync theme from parent OSM container or localStorage
+  const synced = syncThemeFromParent();
+  if (!synced) {
+    setTheme(userTheme.value);
+  }
   setHtmlLocale(locale.value);
   // this might be null during HMR
   const loading = document.getElementById("loading");

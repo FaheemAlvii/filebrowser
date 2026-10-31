@@ -39,13 +39,12 @@
         <div class="nav-group">
           <div class="nav-group-title">Storage & Files</div>
           <button
-            class="action nav-item"
+            class="nav-item"
             :class="{ active: isFilesRoute }"
             @click="toRoot"
             :aria-label="$t('sidebar.myFiles')"
             :title="$t('sidebar.myFiles')"
           >
-            <span v-if="isFilesRoute" class="active-bar"></span>
             <i class="material-icons">folder</i>
             <span>{{ $t("sidebar.myFiles") }}</span>
           </button>
@@ -56,7 +55,7 @@
           <div class="nav-group-title">Actions</div>
           <button
             @click="showHover('newDir')"
-            class="action nav-item"
+            class="nav-item"
             :aria-label="$t('sidebar.newFolder')"
             :title="$t('sidebar.newFolder')"
           >
@@ -66,7 +65,7 @@
 
           <button
             @click="showHover('newFile')"
-            class="action nav-item"
+            class="nav-item"
             :aria-label="$t('sidebar.newFile')"
             :title="$t('sidebar.newFile')"
           >
@@ -80,25 +79,23 @@
           <div class="nav-group-title">Administration</div>
           <button
             @click="toAccountSettings"
-            class="action nav-item"
+            class="nav-item"
             :class="{ active: isProfileRoute }"
             :aria-label="user.username"
             :title="user.username"
           >
-            <span v-if="isProfileRoute" class="active-bar"></span>
             <i class="material-icons">person</i>
             <span>{{ user.username }}</span>
           </button>
 
           <button
             v-if="user.perm.admin"
-            class="action nav-item"
+            class="nav-item"
             :class="{ active: isGlobalSettingsRoute }"
             @click="toGlobalSettings"
             :aria-label="$t('sidebar.settings')"
             :title="$t('sidebar.settings')"
           >
-            <span v-if="isGlobalSettingsRoute" class="active-bar"></span>
             <i class="material-icons">settings_applications</i>
             <span>{{ $t("sidebar.settings") }}</span>
           </button>
@@ -110,7 +107,7 @@
           <div class="nav-group-title">Authentication</div>
           <router-link
             v-if="!hideLoginButton"
-            class="action nav-item"
+            class="nav-item"
             to="/login"
             :aria-label="$t('sidebar.login')"
             :title="$t('sidebar.login')"
@@ -121,7 +118,7 @@
 
           <router-link
             v-if="signup"
-            class="action nav-item"
+            class="nav-item"
             to="/login"
             :aria-label="$t('sidebar.signup')"
             :title="$t('sidebar.signup')"
@@ -144,7 +141,13 @@
           <span>Disk Usage</span>
           <span class="disk-percentage">{{ usage.usedPercentage }}%</span>
         </div>
-        <progress-bar :val="usage.usedPercentage" size="small" bar-color="var(--blue)" bg-color="var(--borderPrimary)" :bar-border-radius="4"></progress-bar>
+        <progress-bar
+          :val="usage.usedPercentage"
+          size="small"
+          bar-color="var(--blue)"
+          bg-color="var(--borderPrimary)"
+          :bar-border-radius="4"
+        ></progress-bar>
         <div class="disk-usage-sub">
           {{ $t("sidebar.diskUsed", { used: usage.used, total: usage.total }) }}
         </div>
@@ -153,7 +156,7 @@
       <!-- Theme Toggle matching odoo-server-reborn -->
       <button
         @click="handleToggleTheme"
-        class="action nav-item theme-toggle-btn"
+        class="nav-item theme-toggle-btn"
         title="Toggle Theme"
       >
         <i class="material-icons">{{ isDark ? "light_mode" : "dark_mode" }}</i>
@@ -164,7 +167,7 @@
       <button
         v-if="isLoggedIn && canLogout"
         @click="logout"
-        class="action nav-item logout-btn"
+        class="nav-item logout-btn"
         id="logout"
         :aria-label="$t('sidebar.logout')"
         :title="$t('sidebar.logout')"
@@ -173,16 +176,10 @@
         <span>{{ $t("sidebar.logout") }}</span>
       </button>
 
-      <!-- Subtitle credits -->
+      <!-- Subtitle credits (without external filebrowser link) -->
       <div class="credits-sub">
         <span>
-          <span v-if="disableExternal">{{ name }}</span>
-          <a
-            v-else
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/filebrowser/filebrowser"
-          >{{ name }}</a>
+          <span>{{ name }}</span>
           <span> {{ version }}</span>
         </span>
         <a @click="help" class="help-link">{{ $t("sidebar.help") }}</a>
@@ -205,7 +202,6 @@ import {
   version,
   signup,
   hideLoginButton,
-  disableExternal,
   disableUsedPercentage,
   noAuth,
   logoutPage,
@@ -257,7 +253,6 @@ export default {
     signup: () => signup,
     hideLoginButton: () => hideLoginButton,
     version: () => version,
-    disableExternal: () => disableExternal,
     disableUsedPercentage: () => disableUsedPercentage,
     canLogout: () => !noAuth && (loginPage || logoutPage !== "/login"),
     isFilesRoute() {

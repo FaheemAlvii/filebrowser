@@ -70,7 +70,7 @@
             <a
               class="link"
               target="_blank"
-              href="https://github.com/filebrowser/filebrowser/blob/master/docs/customization.md#custom-branding"
+              href="#"
               >{{ t("settings.documentation") }}</a
             >
           </i18n-t>
@@ -209,7 +209,7 @@
             <a
               class="link"
               target="_blank"
-              href="https://github.com/filebrowser/filebrowser/blob/master/docs/command-execution.md#hook-runner"
+              href="#"
               >{{ t("settings.documentation") }}</a
             >
           </i18n-t>
